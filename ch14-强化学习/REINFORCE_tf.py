@@ -32,7 +32,7 @@ class Policy(keras.Model):
         self.fc1 = layers.Dense(128, kernel_initializer='he_normal')
         self.fc2 = layers.Dense(2, kernel_initializer='he_normal')
         # 网络优化器
-        self.optimizer = optimizers.Adam(lr=learning_rate)
+        self.optimizer = optimizers.Adam(learning_rate=learning_rate)
 
     def call(self, inputs, training=None):
         # 状态输入s的shape为向量：[4]

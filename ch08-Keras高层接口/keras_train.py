@@ -87,7 +87,7 @@ class MyNetwork(keras.Model):
 
 
 network = MyNetwork()
-network.compile(optimizer=optimizers.Adam(lr=1e-3),
+network.compile(optimizer=optimizers.Adam(learning_rate=1e-3),
                 loss=tf.losses.CategoricalCrossentropy(from_logits=True),
                 metrics=['accuracy'])
 network.fit(train_db, epochs=15, validation_data=test_db, validation_freq=1)
@@ -99,7 +99,7 @@ print('saved to ckpt/weights.ckpt')
 
 
 network = MyNetwork()
-network.compile(optimizer=optimizers.Adam(lr=1e-3),
+network.compile(optimizer=optimizers.Adam(learning_rate=1e-3),
                 loss=tf.losses.CategoricalCrossentropy(from_logits=True),
                 metrics=['accuracy'])
 network.load_weights('ckpt/weights.ckpt')

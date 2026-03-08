@@ -30,7 +30,7 @@ model = Sequential([layers.Dense(256, activation='relu'),
 model.build(input_shape=(4, 28*28))
 model.summary()
 
-optimizer = optimizers.SGD(lr=0.01)
+optimizer = optimizers.SGD(learning_rate=0.01)
 acc_meter = metrics.Accuracy()
 
 for step, (x,y) in enumerate(db):

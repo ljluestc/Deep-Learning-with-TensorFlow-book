@@ -33,7 +33,7 @@ network = Sequential([layers.Dense(256, activation='relu'),
 network.build(input_shape=(None, 28*28))
 network.summary()
 
-optimizer = optimizers.Adam(lr=0.01)
+optimizer = optimizers.Adam(learning_rate=0.01)
 
 
 

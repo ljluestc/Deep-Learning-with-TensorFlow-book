@@ -74,7 +74,7 @@ def main():
     fc_net.build(input_shape=[None, 512])
     conv_net.summary()
     fc_net.summary()
-    optimizer = optimizers.Adam(lr=1e-4)
+    optimizer = optimizers.Adam(learning_rate=1e-4)
 
     # [1, 2] + [3, 4] => [1, 2, 3, 4]
     variables = conv_net.trainable_variables + fc_net.trainable_variables

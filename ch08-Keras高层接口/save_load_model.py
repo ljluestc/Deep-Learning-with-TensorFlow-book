@@ -42,7 +42,7 @@ network.summary()
 
 
 
-network.compile(optimizer=optimizers.Adam(lr=0.01),
+network.compile(optimizer=optimizers.Adam(learning_rate=0.01),
 		loss=tf.losses.CategoricalCrossentropy(from_logits=True),
 		metrics=['accuracy']
 	)
@@ -57,7 +57,7 @@ del network
 
 print('loaded model from file.')
 network = tf.keras.models.load_model('model.h5', compile=False)
-network.compile(optimizer=optimizers.Adam(lr=0.01),
+network.compile(optimizer=optimizers.Adam(learning_rate=0.01),
         loss=tf.losses.CategoricalCrossentropy(from_logits=True),
         metrics=['accuracy']
     )

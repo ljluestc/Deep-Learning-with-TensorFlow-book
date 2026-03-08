@@ -72,7 +72,7 @@ network.summary()
 # 导入优化器，损失函数模块
 from tensorflow.keras import optimizers,losses 
 # 采用Adam优化器，学习率为0.01;采用交叉熵损失函数，包含Softmax
-network.compile(optimizer=optimizers.Adam(lr=0.01),
+network.compile(optimizer=optimizers.Adam(learning_rate=0.01),
         loss=losses.CategoricalCrossentropy(from_logits=True),
         metrics=['accuracy'] # 设置测量指标为准确率
 )
@@ -97,7 +97,7 @@ network = Sequential([layers.Dense(256, activation='relu'),
                      layers.Dense(64, activation='relu'),
                      layers.Dense(32, activation='relu'),
                      layers.Dense(10)])
-network.compile(optimizer=optimizers.Adam(lr=0.01),
+network.compile(optimizer=optimizers.Adam(learning_rate=0.01),
         loss=tf.losses.CategoricalCrossentropy(from_logits=True),
         metrics=['accuracy']
     ) 

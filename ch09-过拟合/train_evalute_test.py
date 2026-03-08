@@ -50,7 +50,7 @@ network.summary()
 
 
 
-network.compile(optimizer=optimizers.Adam(lr=0.01),
+network.compile(optimizer=optimizers.Adam(learning_rate=0.01),
 		loss=tf.losses.CategoricalCrossentropy(from_logits=True),
 		metrics=['accuracy']
 	)

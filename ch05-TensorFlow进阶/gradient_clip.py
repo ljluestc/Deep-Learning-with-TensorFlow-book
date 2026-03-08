@@ -29,7 +29,7 @@ def main():
 
 
 
-    optimizer = optimizers.SGD(lr=0.01)
+    optimizer = optimizers.SGD(learning_rate=0.01)
 
 
     for step, (x,y) in enumerate(train_db):

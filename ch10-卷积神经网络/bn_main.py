@@ -23,7 +23,7 @@ for i in range(100):
 print('forward in train mode(100 steps):', net.variables)
 
 
-optimizer = optimizers.SGD(lr=1e-2)
+optimizer = optimizers.SGD(learning_rate=1e-2)
 for i in range(10):
     with tf.GradientTape() as tape:
         out = net(x, training=True)

@@ -77,7 +77,7 @@ early_stopping = EarlyStopping(
     patience=3
 )
 
-newnet.compile(optimizer=optimizers.Adam(lr=1e-3),
+newnet.compile(optimizer=optimizers.Adam(learning_rate=1e-3),
                loss=losses.CategoricalCrossentropy(from_logits=True),
                metrics=['accuracy'])
 history  = newnet.fit(db_train, validation_data=db_val, validation_freq=1, epochs=100,

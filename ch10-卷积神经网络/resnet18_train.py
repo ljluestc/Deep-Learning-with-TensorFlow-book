@@ -42,7 +42,7 @@ def main():
     model = resnet18() # ResNet18网络
     model.build(input_shape=(None, 32, 32, 3))
     model.summary() # 统计网络参数
-    optimizer = optimizers.Adam(lr=1e-4) # 构建优化器
+    optimizer = optimizers.Adam(learning_rate=1e-4) # 构建优化器
 
     for epoch in range(100): # 训练epoch
 

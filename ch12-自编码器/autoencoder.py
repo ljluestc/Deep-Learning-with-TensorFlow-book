@@ -80,7 +80,7 @@ model = AE()
 model.build(input_shape=(None, 784))
 model.summary()
 
-optimizer = tf.optimizers.Adam(lr=lr)
+optimizer = tf.optimizers.Adam(learning_rate=lr)
 
 for epoch in range(100):
 

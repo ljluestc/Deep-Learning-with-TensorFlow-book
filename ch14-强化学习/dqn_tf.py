@@ -125,7 +125,7 @@ def main():
 
     print_interval = 20
     score = 0.0
-    optimizer = optimizers.Adam(lr=learning_rate)
+    optimizer = optimizers.Adam(learning_rate=learning_rate)
 
     for n_epi in range(10000):  # 训练次数
         # epsilon概率也会8%到1%衰减，越到后面越使用Q值最大的动作
