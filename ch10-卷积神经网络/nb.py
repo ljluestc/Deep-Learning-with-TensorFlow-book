@@ -87,40 +87,41 @@ from tensorflow.keras import losses, optimizers
 criteon = losses.CategoricalCrossentropy(from_logits=True)
 
 # %%
-    # 构建梯度记录环境
-    with tf.GradientTape() as tape: 
-        # 插入通道维度，=>[b,28,28,1]
-        x = tf.expand_dims(x,axis=3)
-        # 前向计算，获得10类别的预测分布，[b, 784] => [b, 10]
-        out = network(x)
-        # 真实标签one-hot编码，[b] => [b, 10]
-        y_onehot = tf.one_hot(y, depth=10)
-        # 计算交叉熵损失函数，标量
-        loss = criteon(y_onehot, out)
-    # 自动计算梯度
-    grads = tape.gradient(loss, network.trainable_variables)
-    # 自动更新参数
-    optimizer.apply_gradients(zip(grads, network.trainable_variables))
+# 构建梯度记录环境
+optimizer = optimizers.Adam(lr=1e-4)
+with tf.GradientTape() as tape:
+    # 插入通道维度，=>[b,28,28,1]
+    x = tf.expand_dims(x,axis=3)
+    # 前向计算，获得10类别的预测分布，[b, 784] => [b, 10]
+    out = network(x)
+    # 真实标签one-hot编码，[b] => [b, 10]
+    y_onehot = tf.one_hot(y, depth=10)
+    # 计算交叉熵损失函数，标量
+    loss = criteon(y_onehot, out)
+# 自动计算梯度
+grads = tape.gradient(loss, network.trainable_variables)
+# 自动更新参数
+optimizer.apply_gradients(zip(grads, network.trainable_variables))
 
 
 # %%
-        # 记录预测正确的数量，总样本数量
-        correct, total = 0,0
-        for x,y in db_test: # 遍历所有训练集样本
-            # 插入通道维度，=>[b,28,28,1]
-            x = tf.expand_dims(x,axis=3)
-            # 前向计算，获得10类别的预测分布，[b, 784] => [b, 10]
-            out = network(x)
-            # 真实的流程时先经过softmax，再argmax
-            # 但是由于softmax不改变元素的大小相对关系，故省去
-            pred = tf.argmax(out, axis=-1)  
-            y = tf.cast(y, tf.int64)
-            # 统计预测正确数量
-            correct += float(tf.reduce_sum(tf.cast(tf.equal(pred, y),tf.float32)))
-            # 统计预测样本总数
-            total += x.shape[0]
-        # 计算准确率
-        print('test acc:', correct/total)
+# 记录预测正确的数量，总样本数量
+correct, total = 0,0
+for x,y in db_test: # 遍历所有训练集样本
+    # 插入通道维度，=>[b,28,28,1]
+    x = tf.expand_dims(x,axis=3)
+    # 前向计算，获得10类别的预测分布，[b, 784] => [b, 10]
+    out = network(x)
+    # 真实的流程时先经过softmax，再argmax
+    # 但是由于softmax不改变元素的大小相对关系，故省去
+    pred = tf.argmax(out, axis=-1)
+    y = tf.cast(y, tf.int64)
+    # 统计预测正确数量
+    correct += float(tf.reduce_sum(tf.cast(tf.equal(pred, y),tf.float32)))
+    # 统计预测样本总数
+    total += x.shape[0]
+# 计算准确率
+print('test acc:', correct/total)
 
 
 # %%
@@ -159,19 +160,19 @@ network = Sequential([ # 网络容器
 
 
 # %%
-    with tf.GradientTape() as tape: 
-        # 插入通道维度
-        x = tf.expand_dims(x,axis=3)
-        # 前向计算，设置计算模式，[b, 784] => [b, 10]
-        out = network(x, training=True)
+with tf.GradientTape() as tape:
+    # 插入通道维度
+    x = tf.expand_dims(x,axis=3)
+    # 前向计算，设置计算模式，[b, 784] => [b, 10]
+    out = network(x, training=True)
 
 
 # %%
-        for x,y in db_test: # 遍历测试集
-            # 插入通道维度
-            x = tf.expand_dims(x,axis=3)
-            # 前向计算，测试模式
-            out = network(x, training=False)
+for x,y in db_test: # 遍历测试集
+    # 插入通道维度
+    x = tf.expand_dims(x,axis=3)
+    # 前向计算，测试模式
+    out = network(x, training=False)
 
 
 # %%
@@ -288,13 +289,13 @@ xx = tf.nn.conv2d_transpose(out, w, strides=2,
     padding='VALID',
     output_shape=[1,5,5,1])
 
-
-<tf.Tensor: id=117, shape=(5, 5), dtype=float32, numpy=
-array([[   67.,  -134.,   278.,  -154.,   231.],
-       [ -268.,   335.,  -710.,   385.,  -462.],
-       [  586.,  -770.,  1620.,  -870.,  1074.],
-       [ -468.,   585., -1210.,   635.,  -762.],
-       [  819.,  -936.,  1942., -1016.,  1143.]], dtype=float32)>
+# Expected output:
+# <tf.Tensor: shape=(5, 5), dtype=float32, numpy=
+# array([[   67.,  -134.,   278.,  -154.,   231.],
+#        [ -268.,   335.,  -710.,   385.,  -462.],
+#        [  586.,  -770.,  1620.,  -870.,  1074.],
+#        [ -468.,   585., -1210.,   635.,  -762.],
+#        [  819.,  -936.,  1942., -1016.,  1143.]], dtype=float32)>
 
 
 # %%
@@ -302,12 +303,8 @@ x = tf.random.normal([1,6,6,1])
 # 6x6的输入经过普通卷积
 out = tf.nn.conv2d(x,w,strides=2,padding='VALID')
 out
-<tf.Tensor: id=21, shape=(1, 2, 2, 1), dtype=float32, numpy=
-array([[[[ 20.438847 ],
-         [ 19.160788 ]],
-
-        [[  0.8098897],
-         [-28.30303  ]]]], dtype=float32)>
+# Expected output:
+# <tf.Tensor: shape=(1, 2, 2, 1), dtype=float32>
 # %%
 # 恢复出6x6大小
 xx = tf.nn.conv2d_transpose(out, w, strides=2, 

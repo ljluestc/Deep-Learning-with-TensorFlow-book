@@ -24,7 +24,7 @@ h2 = fc2(h1)
 h3 = fc3(h2)
 h4 = fc4(h3)
 
-model = layers.Sequential([
+model = keras.Sequential([
     layers.Dense(256, activation=tf.nn.relu) ,
     layers.Dense(128, activation=tf.nn.relu) ,
     layers.Dense(64, activation=tf.nn.relu) ,
